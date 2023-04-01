@@ -1,19 +1,9 @@
 import {
   Box,
-  Flex,
-  Icon,
   IconButton,
-  Stack,
-  VStack,
-  Button,
   Text,
   HStack,
-  Badge,
-  Heading,
-  Link as LinkChakra,
   Divider,
-  FormControl,
-  Input,
   Tooltip,
   Menu,
   MenuButton,
@@ -21,18 +11,11 @@ import {
   MenuItem,
 } from '@chakra-ui/react';
 import React from 'react';
-import {
-  FiMoreVertical,
-  FiCheck,
-  FiCircle,
-  FiPlus,
-  FiEdit3,
-  FiMoreHorizontal,
-} from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { FiCheck, FiEdit3, FiMoreHorizontal } from 'react-icons/fi';
 import TaskLabels from './TaskLabels';
+import DraggableHandle from './DraggableHandle';
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ task, handleComplete }) => {
   return (
     <>
       <Box
@@ -43,6 +26,7 @@ const TaskItem = ({ task }) => {
         }}
       >
         <HStack color={'gray.500'}>
+          <DraggableHandle />
           <Box as={HStack} flex={1}>
             <Tooltip label="Complete Task" fontSize="md" placement="top-start">
               <IconButton
@@ -56,11 +40,14 @@ const TaskItem = ({ task }) => {
                     opacity: 1,
                   },
                 }}
+                onClick={() => handleComplete(task.id)}
               />
             </Tooltip>
 
             <Text fontSize={'small'}>{task.title}</Text>
           </Box>
+
+          {/* ACTIONS  START*/}
           <IconButton icon={<FiEdit3 />} border={'none'} variant={'ghost'} />
 
           <Menu placement="auto-end">
@@ -72,13 +59,12 @@ const TaskItem = ({ task }) => {
               Actions
             </MenuButton>
             <MenuList>
-              <MenuItem>Download</MenuItem>
-              <MenuItem>Create a Copy</MenuItem>
-              <MenuItem>Mark as Draft</MenuItem>
+              <MenuItem>Edit</MenuItem>
+              <Divider />
               <MenuItem>Delete</MenuItem>
-              <MenuItem>Attend a Workshop</MenuItem>
             </MenuList>
           </Menu>
+          {/* ACTIONS  END*/}
         </HStack>
         <Box
           display={'flex'}
